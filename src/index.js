@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import pokemonsList from './data/pokemonsList.js';
+import pokemonsList from './data/pokemons.json' assert { type: 'json' }
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 dotenv.config();
@@ -35,7 +36,123 @@ app.use('/assets', express.static(path.join(__dirname, '../assets')));
 
 // Route GET de base
 app.get('/api/pokemons', (req, res) => {
-    res.json(pokemonsList);
+    res.send({
+        pokemons: pokemonsList.map((pokemon) => ({
+            name: pokemon.name.english,
+            type: pokemon.type
+        }))
+    });
+});
+
+// Route GET pour obtenir un Pokémon par son nom
+app.get('/api/pokemons/:id', (req, res) => {
+    const pokemon = pokemonsList.find((pokemon) => pokemon.id === parseInt(req.params.id));
+
+    if (pokemon) {
+        res.send({
+            id: pokemon.id,
+            name: pokemon.name.french,
+            type: pokemon.type,
+            base: pokemon.base,
+            image: pokemon.image
+        });
+    } else {
+        res.status(404).send({
+            message: 'Pokemon not found'
+        });
+    }
+});
+
+// Route POST pour ajouter un Pokémon
+app.post('/api/pokemons', (req, res) => {
+    const newPokemon = req.body;
+
+    const filePath = path.join(__dirname, 'data', 'pokemons.json');
+
+    if (newPokemon && newPokemon.id && newPokemon.name && newPokemon.type && newPokemon.base) {
+        pokemonsList.push(newPokemon);
+
+        try{
+            fs.writeFileSync(filePath, JSON.stringify(pokemonsList, null, 2), 'utf-8');
+            res.status(200).send({
+                message: 'Pokemon added successfully'
+            })
+        }catch (error){
+            res.status(500).send({
+                message: 'Error saving Pokemon to file',
+                error: error.message
+            });
+        }
+    } else {
+        res.status(400).send({
+            message: 'Invalid Pokemon data'
+        });
+    }
+});
+
+// Route PUT pour mettre à jour un Pokémon
+app.put('/api/pokemons/:id', (req, res) => {
+    const pokemonIndex = pokemonsList.findIndex((pokemon) => pokemon.id === parseInt(req.params.id));
+
+    if (pokemonIndex !== -1) {
+        const updatedPokemon = req.body;
+
+        // Vérification des données du Pokémon
+        if (updatedPokemon && updatedPokemon.id && updatedPokemon.name && updatedPokemon.type && updatedPokemon.base) {
+
+            pokemonsList[pokemonIndex] = updatedPokemon;
+
+            const filePath = path.join(__dirname, 'data', 'pokemons.json');
+            try {
+                fs.writeFileSync(filePath, JSON.stringify(pokemonsList, null, 2), 'utf-8');
+                res.status(200).send({
+                    message: 'Pokemon updated successfully'
+                });
+            } catch (error) {
+                res.status(500).send({
+                    message: 'Error saving Pokemon to file',
+                    error: error.message
+                });
+            }
+        } else {
+            res.status(400).send({
+                message: 'Invalid Pokemon data'
+            });
+        }
+    } else {
+        res.status(404).send({
+            message: 'Pokemon not found'
+        });
+    }
+});
+
+
+
+// Route DELETE pour supprimer un Pokémon
+app.delete('/api/pokemons/:id', (req, res) => {
+    const pokemonIndex = pokemonsList.findIndex((pokemon) => pokemon.id === parseInt(req.params.id));
+
+    if (pokemonIndex !== -1) {
+        pokemonsList.splice(pokemonIndex, 1);
+
+        const filePath = path.join(__dirname, 'data', 'pokemons.json');
+
+        try {
+            fs.writeFileSync(filePath, JSON.stringify(pokemonsList, null, 2), 'utf-8');
+            res.status(200).send({
+                message: 'Pokemon deleted successfully'
+            });
+        } catch (error) {
+            res.status(500).send({
+                message: 'Error saving Pokemon to file',
+                error: error.message
+            });
+        }
+    } else {
+        res.status(404).send({
+            message: 'Pokemon not found'
+        });
+    }
 });
 
 // Démarrage du serveur
