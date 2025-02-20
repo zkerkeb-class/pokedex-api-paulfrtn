@@ -28,24 +28,42 @@ app.use(cors());
 app.use(express.json());
 
 // Middleware pour servir des fichiers statiques
-// 'app.use' est utilisé pour ajouter un middleware à notre application Express
+// 'app.use' est utilisé pour ajouter un middleware à notre application Expresss
 // '/assets' est le chemin virtuel où les fichiers seront accessibles
 // 'express.static' est un middleware qui sert des fichiers statiques
 // 'path.join(__dirname, '../assets')' construit le chemin absolu vers le dossier 'assets'
 app.use('/assets', express.static(path.join(__dirname, '../assets')));
 
-// Route GET de base
 app.get('/api/pokemons', (req, res) => {
     res.send({
         pokemons: pokemonsList.map((pokemon) => ({
-            name: pokemon.name.english,
-            type: pokemon.type
+            id: pokemon.id,
+            name: pokemon.name.french,
+            type: pokemon.type,
+            base: pokemon.base,
+            image: pokemon.image
         }))
     });
 });
 
-// Route GET pour obtenir un Pokémon par son nom
-app.get('/api/pokemons/:id', (req, res) => {
+app.get('/api/pokemons/page/:page', (req, res) => {
+    const page = parseInt(req.params.page);
+    const pageSize = 10;
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+
+    res.send({
+        pokemons: pokemonsList.slice(start, end).map((pokemon) => ({
+            id: pokemon.id,
+            name: pokemon.name.french,
+            type: pokemon.type,
+            base: pokemon.base,
+            image: pokemon.image
+        }))
+    });
+});
+
+app.get('/api/pokemons/id/:id', (req, res) => {
     const pokemon = pokemonsList.find((pokemon) => pokemon.id === parseInt(req.params.id));
 
     if (pokemon) {
@@ -63,7 +81,48 @@ app.get('/api/pokemons/:id', (req, res) => {
     }
 });
 
-// Route POST pour ajouter un Pokémon
+app.get('/api/pokemons/name/:name', (req, res) => {
+    const pokemon = pokemonsList.find((pokemon) =>
+        pokemon.name.french.toLowerCase() === req.params.name.toLowerCase()
+    );
+
+    if (pokemon) {
+        res.send({
+            id: pokemon.id,
+            name: pokemon.name.french,
+            type: pokemon.type,
+            base: pokemon.base,
+            image: pokemon.image
+        });
+    } else {
+        res.status(404).send({
+            message: 'Pokemon not found'
+        });
+    }
+});
+
+app.get('/api/pokemons/type/:type', (req, res) => {
+    const pokemons = pokemonsList.filter((pokemon) =>
+        pokemon.type.includes(req.params.type.toLowerCase())
+    );
+
+    if (pokemons.length > 0) {
+        res.send({
+            pokemons: pokemons.map((pokemon) => ({
+                id: pokemon.id,
+                name: pokemon.name.french,
+                type: pokemon.type,
+                base: pokemon.base,
+                image: pokemon.image
+            }))
+        });
+    } else {
+        res.status(404).send({
+            message: 'Pokemon not found'
+        });
+    }
+});
+
 app.post('/api/pokemons', (req, res) => {
     const newPokemon = req.body;
 
@@ -90,7 +149,6 @@ app.post('/api/pokemons', (req, res) => {
     }
 });
 
-// Route PUT pour mettre à jour un Pokémon
 app.put('/api/pokemons/:id', (req, res) => {
     const pokemonIndex = pokemonsList.findIndex((pokemon) => pokemon.id === parseInt(req.params.id));
 
@@ -126,9 +184,6 @@ app.put('/api/pokemons/:id', (req, res) => {
     }
 });
 
-
-
-// Route DELETE pour supprimer un Pokémon
 app.delete('/api/pokemons/:id', (req, res) => {
     const pokemonIndex = pokemonsList.findIndex((pokemon) => pokemon.id === parseInt(req.params.id));
 
