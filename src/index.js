@@ -38,7 +38,7 @@ app.get('/api/pokemons', (req, res) => {
     res.send({
         pokemons: pokemonsList.map((pokemon) => ({
             id: pokemon.id,
-            name: pokemon.name.french,
+            name: pokemon.name,
             type: pokemon.type,
             base: pokemon.base,
             image: pokemon.image

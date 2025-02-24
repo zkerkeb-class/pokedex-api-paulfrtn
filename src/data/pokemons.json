@@ -2704,23 +2704,22 @@
   {
     "id": 127,
     "name": {
-      "english": "Pinsir",
-      "japanese": "カイロス",
-      "chinese": "凯罗斯",
-      "french": "Scarabrute"
+      "english": "JuiceWrld",
+      "french": "JuiceWrld",
+      "japanese": "ヒトカゲ",
+      "chinese": "小火龙"
     },
     "type": [
-      "Bug"
+      "ITALIAN"
     ],
     "base": {
-      "HP": 65,
-      "Attack": 125,
-      "Defense": 100,
-      "Sp. Attack": 55,
-      "Sp. Defense": 70,
-      "Speed": 85
-    },
-    "image": "http://localhost:3000/assets/pokemons/127.png"
+      "HP": 39,
+      "Attack": 52,
+      "Defense": 43,
+      "Sp. Attack": 60,
+      "Sp. Defense": 50,
+      "Speed": 65
+    }
   },
   {
     "id": 128,
@@ -3256,5 +3255,1127 @@
       "Sp. Defense": 50,
       "Speed": 65
     }
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
+  },
+  {
+    "id": 3001,
+    "name": {
+      "french": "Bulbizarre",
+      "english": "Bulbasaur",
+      "japanese": "CC",
+      "chinese": "damn"
+    },
+    "type": [
+      "Grass",
+      "Poison"
+    ],
+    "base": {
+      "HP": 45,
+      "Attack": 49,
+      "Defense": 49,
+      "Sp_Attack": 65,
+      "Sp_Defense": 65,
+      "Speed": 45
+    },
+    "image": "https://example.com/bulbasaur.png"
   }
 ]
