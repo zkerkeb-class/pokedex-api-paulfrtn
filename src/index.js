@@ -39,7 +39,7 @@ app.get("/api/pokemons", (req, res) => {
   res.send({
     pokemons: pokemonsList.map((pokemon) => ({
       id: pokemon.id,
-      name: pokemon.name,
+      name: pokemon.name.french,
       type: pokemon.type,
       base: pokemon.base,
       image: pokemon.image,
@@ -125,6 +125,35 @@ app.get("/api/pokemons/type/:type", (req, res) => {
       message: "Pokemon not found",
     });
   }
+});
+
+app.get("/api/pokemons/search", (req, res) => {
+  const { searchTerm, types } = req.query;
+  
+  let filteredPokemons = [...pokemonsList];
+
+  if (searchTerm) {
+    filteredPokemons = filteredPokemons.filter((pokemon) =>
+      pokemon.name.french.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+
+  if (types) {
+    const typeArray = types.split(',');
+    filteredPokemons = filteredPokemons.filter((pokemon) =>
+      typeArray.every((type) => pokemon.type.includes(type))
+    );
+  }
+
+  res.send({
+    pokemons: filteredPokemons.map((pokemon) => ({
+      id: pokemon.id,
+      name: pokemon.name.french,
+      type: pokemon.type,
+      base: pokemon.base,
+      image: pokemon.image,
+    })),
+  });
 });
 
 app.post("/api/pokemons", (req, res) => {
