@@ -129,19 +129,19 @@ app.get("/api/pokemons/type/:type", (req, res) => {
 
 app.get("/api/pokemons/search", (req, res) => {
   const { searchTerm, types } = req.query;
-  
+
   let filteredPokemons = [...pokemonsList];
 
   if (searchTerm) {
     filteredPokemons = filteredPokemons.filter((pokemon) =>
-      pokemon.name.french.toLowerCase().includes(searchTerm.toLowerCase())
+      pokemon.name.french.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }
 
   if (types) {
-    const typeArray = types.split(',');
+    const typeArray = types.split(",");
     filteredPokemons = filteredPokemons.filter((pokemon) =>
-      typeArray.every((type) => pokemon.type.includes(type))
+      typeArray.every((type) => pokemon.type.includes(type)),
     );
   }
 
