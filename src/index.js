@@ -1,9 +1,11 @@
-import express from 'express';
-import cors from 'cors';
-import pokemonsList from './data/pokemonsList.js';
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import express from "express";
+import cors from "cors";
+import pokemonsList from "./data/pokemons.json" assert { type: "json" };
+import dotenv from "dotenv";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
+import countData from "./data/count.json" assert { type: "json" };
 
 dotenv.config();
 
@@ -27,18 +29,255 @@ app.use(cors());
 app.use(express.json());
 
 // Middleware pour servir des fichiers statiques
-// 'app.use' est utilisé pour ajouter un middleware à notre application Express
+// 'app.use' est utilisé pour ajouter un middleware à notre application Expresss
 // '/assets' est le chemin virtuel où les fichiers seront accessibles
 // 'express.static' est un middleware qui sert des fichiers statiques
 // 'path.join(__dirname, '../assets')' construit le chemin absolu vers le dossier 'assets'
-app.use('/assets', express.static(path.join(__dirname, '../assets')));
+app.use("/assets", express.static(path.join(__dirname, "../assets")));
 
-// Route GET de base
-app.get('/api/pokemons', (req, res) => {
-    res.json(pokemonsList);
+app.get("/api/pokemons", (req, res) => {
+  res.send({
+    pokemons: pokemonsList.map((pokemon) => ({
+      id: pokemon.id,
+      name: pokemon.name.french,
+      type: pokemon.type,
+      base: pokemon.base,
+      image: pokemon.image,
+    })),
+  });
+});
+
+app.get("/api/pokemons/page/:page", (req, res) => {
+  const page = parseInt(req.params.page);
+  const pageSize = 10;
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+
+  res.send({
+    pokemons: pokemonsList.slice(start, end).map((pokemon) => ({
+      id: pokemon.id,
+      name: pokemon.name.french,
+      type: pokemon.type,
+      base: pokemon.base,
+      image: pokemon.image,
+    })),
+  });
+});
+
+app.get("/api/pokemons/id/:id", (req, res) => {
+  const pokemon = pokemonsList.find(
+    (pokemon) => pokemon.id === parseInt(req.params.id),
+  );
+
+  if (pokemon) {
+    res.send({
+      id: pokemon.id,
+      name: pokemon.name.french,
+      type: pokemon.type,
+      base: pokemon.base,
+      image: pokemon.image,
+    });
+  } else {
+    res.status(404).send({
+      message: "Pokemon not found",
+    });
+  }
+});
+
+app.get("/api/pokemons/name/:name", (req, res) => {
+  const pokemon = pokemonsList.find(
+    (pokemon) =>
+      pokemon.name.french.toLowerCase() === req.params.name.toLowerCase(),
+  );
+
+  if (pokemon) {
+    res.send({
+      id: pokemon.id,
+      name: pokemon.name.french,
+      type: pokemon.type,
+      base: pokemon.base,
+      image: pokemon.image,
+    });
+  } else {
+    res.status(404).send({
+      message: "Pokemon not found",
+    });
+  }
+});
+
+app.get("/api/pokemons/type/:type", (req, res) => {
+  const pokemons = pokemonsList.filter((pokemon) =>
+    pokemon.type.some((t) => t.toLowerCase() === req.params.type.toLowerCase()),
+  );
+
+  if (pokemons.length > 0) {
+    res.send({
+      pokemons: pokemons.map((pokemon) => ({
+        id: pokemon.id,
+        name: pokemon.name.french,
+        type: pokemon.type,
+        base: pokemon.base,
+        image: pokemon.image,
+      })),
+    });
+  } else {
+    res.status(404).send({
+      message: "Pokemon not found",
+    });
+  }
+});
+
+app.get("/api/pokemons/search", (req, res) => {
+  const { searchTerm, types } = req.query;
+
+  let filteredPokemons = [...pokemonsList];
+
+  if (searchTerm) {
+    filteredPokemons = filteredPokemons.filter((pokemon) =>
+      pokemon.name.french.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }
+
+  if (types) {
+    const typeArray = types.split(",");
+    filteredPokemons = filteredPokemons.filter((pokemon) =>
+      typeArray.every((type) => pokemon.type.includes(type)),
+    );
+  }
+
+  res.send({
+    pokemons: filteredPokemons.map((pokemon) => ({
+      id: pokemon.id,
+      name: pokemon.name.french,
+      type: pokemon.type,
+      base: pokemon.base,
+      image: pokemon.image,
+    })),
+  });
+});
+
+app.post("/api/pokemons", (req, res) => {
+  const newPokemon = req.body;
+
+  if (
+    !newPokemon.name ||
+    !newPokemon.type ||
+    newPokemon.type.length === 0 ||
+    !newPokemon.base
+  ) {
+    return res
+      .status(400)
+      .send({ message: "Invalid Pokémon data: Missing required fields." });
+  }
+
+  const filePath = path.join(__dirname, "data", "pokemons.json");
+  const filePathCount = path.join(__dirname, "data", "count.json");
+
+  let newId = countData.count + 1;
+
+  newPokemon.id = newId;
+  pokemonsList.push(newPokemon);
+
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(pokemonsList, null, 2), "utf-8");
+
+    countData.count = newId;
+    fs.writeFileSync(
+      filePathCount,
+      JSON.stringify(countData, null, 2),
+      "utf-8",
+    );
+
+    res.status(200).send({
+      message: "Pokemon added successfully",
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "Error saving Pokemon to file",
+      error: error.message,
+    });
+  }
+});
+
+app.put("/api/pokemons/:id", (req, res) => {
+  const pokemonIndex = pokemonsList.findIndex(
+    (pokemon) => pokemon.id === parseInt(req.params.id),
+  );
+
+  if (pokemonIndex !== -1) {
+    const updatedPokemon = req.body;
+
+    // Vérification des données du Pokémon
+    if (
+      updatedPokemon &&
+      updatedPokemon.id &&
+      updatedPokemon.name &&
+      updatedPokemon.type &&
+      updatedPokemon.base
+    ) {
+      pokemonsList[pokemonIndex] = updatedPokemon;
+
+      const filePath = path.join(__dirname, "data", "pokemons.json");
+      try {
+        fs.writeFileSync(
+          filePath,
+          JSON.stringify(pokemonsList, null, 2),
+          "utf-8",
+        );
+        res.status(200).send({
+          message: "Pokemon updated successfully",
+        });
+      } catch (error) {
+        res.status(500).send({
+          message: "Error saving Pokemon to file",
+          error: error.message,
+        });
+      }
+    } else {
+      res.status(400).send({
+        message: "Invalid Pokemon data",
+      });
+    }
+  } else {
+    res.status(404).send({
+      message: "Pokemon not found",
+    });
+  }
+});
+
+app.delete("/api/pokemons/:id", (req, res) => {
+  const pokemonIndex = pokemonsList.findIndex(
+    (pokemon) => pokemon.id.toString() === req.params.id,
+  );
+
+  if (pokemonIndex !== -1) {
+    pokemonsList.splice(pokemonIndex, 1);
+
+    const filePath = path.join(__dirname, "data", "pokemons.json");
+
+    try {
+      fs.writeFileSync(
+        filePath,
+        JSON.stringify(pokemonsList, null, 2),
+        "utf-8",
+      );
+      res.status(200).send({
+        message: "Pokemon deleted successfully",
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: "Error saving Pokemon to file",
+        error: error.message,
+      });
+    }
+  } else {
+    res.status(404).send({
+      message: "Pokemon not found",
+    });
+  }
 });
 
 // Démarrage du serveur
 app.listen(PORT, () => {
-    console.log(`Serveur démarré sur http://localhost:${PORT}`);
+  console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
