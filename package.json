@@ -7,12 +7,14 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "generate-pokemons": "node src/data/generatePokemonJson.js"
+    "generate-pokemons": "node src/data/generatePokemonJson.js",
+    "import-data": "node src/database/importData.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "express": "^4.18.2"
+    "express": "^4.21.2",
+    "mongoose": "^8.13.0"
   },
   "devDependencies": {
     "eslint": "^9.22.0",
