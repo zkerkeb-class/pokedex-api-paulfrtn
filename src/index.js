@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import countData from "./data/count.json" assert { type: "json" };
 import connectDB from "./config/db.js";
 import pokemonRoutes from "./routes/pokemonRoutes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.use(express.json());
 app.use("/assets", express.static(path.join(__dirname, "../assets")));
 
 app.use("/api/pokemons", pokemonRoutes);
+app.use("/api/auth", authRoutes);
 
 // Démarrage du serveur
 app.listen(PORT, "0.0.0.0", () => {
