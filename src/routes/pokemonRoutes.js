@@ -1,5 +1,6 @@
 import express from "express";
 import Pokemon from "../models/Pokemon.js";
+import verifyToken from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
@@ -85,10 +86,24 @@ router.get("/search", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+/**
+ * @route   POST /api/pokemons
+ * @desc    Ajouter un nouveau Pokémon
+ * @access  Privé (JWT requis)
+ * @headers Authorization: Bearer <token>
+ * @body    {
+ *            id: Number,
+ *            name: { french, english, japanese, chinese },
+ *            type: [String],
+ *            base: { hp, attack, defense, special_attack, special_defense, speed },
+ *            image: String
+ *          }
+ * @return  201 Created avec le Pokémon créé, ou 400 si déjà existant, ou 500 en erreur serveur
+ */
+router.post("/", verifyToken, async (req, res) => {
   try {
     const pokemonData = req.body;
-    
+
     // Vérifier si un Pokémon avec cet ID existe déjà
     const exists = await Pokemon.findOne({ id: pokemonData.id });
     if (exists) {
@@ -98,14 +113,24 @@ router.post("/", async (req, res) => {
     // Créer le nouveau Pokémon
     const newPokemon = new Pokemon(pokemonData);
     const savedPokemon = await newPokemon.save();
-    
+
     res.status(201).json(savedPokemon);
   } catch (e) {
     res.status(500).json({ message: "Erreur serveur", error: e.message });
   }
 });
 
-router.put("/:id", async (req, res) => {
+
+/**
+ * @route   PUT /api/pokemons/:id
+ * @desc    Modifier un Pokémon existant par son ID
+ * @access  Privé (JWT requis)
+ * @headers Authorization: Bearer <token>
+ * @params  :id (Number) → ID du Pokémon à modifier
+ * @body    Toutes les propriétés modifiables du Pokémon
+ * @return  200 OK avec le Pokémon mis à jour, 404 si non trouvé, ou 500 en erreur serveur
+ */
+router.put("/:id", verifyToken, async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const updated = await Pokemon.findOneAndUpdate({ id }, req.body, {
@@ -120,7 +145,22 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+
+/**
+ * @route   DELETE /api/pokemons/:id
+ * @desc    Supprimer un Pokémon (admin uniquement)
+ * @access  Privé (JWT + admin)
+ * @headers Authorization: Bearer <token>
+ * @params  :id (int)
+ * @return  200 OK ou 403/401/404
+ */
+router.delete("/:id", verifyToken, async (req, res) => {
+  if (req.user.role !== "admin") {
+    return res
+      .status(403)
+      .json({ message: "Accès interdit: admin uniquement." });
+  }
+
   try {
     const id = parseInt(req.params.id);
     const deleted = await Pokemon.findOneAndDelete({ id });

@@ -1,10 +1,10 @@
-// src/scripts/importData.js
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import Pokemon from "../models/Pokemon.js";
+import User from "../models/User.js";
 import connectDB from "../config/db.js";
 
 dotenv.config();
@@ -40,9 +40,31 @@ const formattedPokemons = pokemons.map((p) => ({
 
 const importData = async () => {
   try {
-    await Pokemon.deleteMany(); // on wipe la collection
+    await Pokemon.deleteMany();
+    await User.deleteMany();
     await Pokemon.insertMany(formattedPokemons);
-    console.log("✔️ Données importées avec succès !");
+    console.log("✔️ Pokémons importées avec succès !");
+
+    const admin = new User({
+      firstname: "Admin",
+      lastname: "Test",
+      mail: "admin@poke.com",
+      password: "admin123",
+      role: "admin",
+    });
+
+    const user = new User({
+      firstname: "Aldous",
+      lastname: "LeGrand",
+      mail: "aldous@huxley.com",
+      password: "password",
+      role: "user",
+    });
+
+    await admin.save();
+    await user.save();
+    console.log("✔️ Utilisateurs créés avec succès.");
+
     process.exit();
   } catch (error) {
     console.error("❌ Erreur d'importation :", error);
