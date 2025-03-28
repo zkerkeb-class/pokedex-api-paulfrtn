@@ -1,75 +1,119 @@
-## Concepts à Comprendre
-1. REST API
-   - Méthodes HTTP (GET, POST, PUT, DELETE)
-   - Codes de statut HTTP
-   - Structure des URL
-   - CORS (Cross-Origin Resource Sharing)
+# 📦 Pokedex API – Projet Node.js + MongoDB
 
-2. Express.js
-   - Routing
-   - Middleware
-   - Gestion des requêtes et réponses
-   - Configuration CORS
+Une API RESTful pour manipuler des données Pokémon avec gestion des utilisateurs, authentification JWT, et rôles (
+`admin` / `user`).
 
-3. Sécurité de Base
-   - Validation des entrées
-   - Authentification
-   - Gestion des erreurs
-   - Politiques CORS
+---
 
-## Configuration CORS
-CORS (Cross-Origin Resource Sharing) est un mécanisme qui permet à de nombreuses ressources (polices, JavaScript, etc.) d'une page web d'être demandées à partir d'un autre domaine que celui du domaine d'origine.
+## 🚀 Cloner le projet
 
-Pour utiliser l'API depuis un autre domaine :
-1. L'API est configurée avec CORS activé
-2. Toutes les origines sont autorisées dans cette version de développement
-3. En production, vous devriez restreindre les origines autorisées
-
-Pour une configuration plus restrictive, vous pouvez modifier les options CORS :
-
-```javascript
-app.use(cors({
-  origin: 'https://votre-domaine.com',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+```bash
+git clone git@github.com:zkerkeb-class/pokedex-api-paulfrtn.git
+cd pokedex-api-paulfrtn
 ```
 
-## Ressources Additionnelles
-- [Documentation Express.js](https://expressjs.com/fr/)
-- [Guide des Status HTTP](https://developer.mozilla.org/fr/docs/Web/HTTP/Status)
-- [REST API Best Practices](https://restfulapi.net/)
+---
 
-## Support
-Pour toute question ou problème :
-1. Vérifiez la documentation
-2. Consultez les messages d'erreur dans la console
-3. Demandez de l'aide à votre formateur
+## 📆 Installer les dépendances
 
-## Prochaines Étapes
-- Ajout d'une base de données (MongoDB)
-- Implémentation de tests automatisés
-- Déploiement de l'API
-- Documentation avec Swagger
-
-## Gestion des Fichiers Statiques
-Le serveur expose le dossier `assets` pour servir les images des Pokémon. Les images sont accessibles via l'URL :
-```
-http://localhost:3000/assets/pokemons/{id}.png
+```bash
+npm install
 ```
 
-Par exemple, pour accéder à l'image de Pikachu (ID: 25) :
-```
-http://localhost:3000/assets/pokemons/25.png
+---
+
+## ⚙️ Configuration de l'environnement
+
+Copiez le fichier `.env.example` vers `.env` :
+
+```bash
+cp .env.example .env
 ```
 
-### Configuration
-Le middleware `express.static` est utilisé pour servir les fichiers statiques :
-```javascript
-app.use('/assets', express.static(path.join(__dirname, '../assets')));
+🛡️ **Important** : remplacez la valeur de `JWT_SECRET` par une chaîne **forte et secrète**  
+(exemple : `JWT_SECRET=UnSecretUltraComplexe123!@#`)
+
+---
+
+## 💄 Initialiser la base de données
+
+Ce script :
+
+- Supprime les anciens pokémons et utilisateurs
+- Réimporte tous les pokémons depuis `pokemons.json`
+- Crée deux utilisateurs : un admin et un user
+
+```bash
+npm run import-data
 ```
 
-### Sécurité
-- Seuls les fichiers du dossier `assets` sont exposés
-- Les autres dossiers du projet restent inaccessibles
-- En production, considérez l'utilisation d'un CDN pour les fichiers statiques
+### 👤 Utilisateurs créés automatiquement
+
+| Rôle  | Email          | Mot de passe |
+|-------|----------------|--------------|
+| admin | admin@poke.com | admin123     |
+| user  | user@poke.com  | user123      |
+
+---
+
+## 🧪 Lancer le serveur en mode développement
+
+```bash
+npm run dev
+```
+
+Le serveur démarre par défaut sur :  
+[http://localhost:3000](http://localhost:3000)
+
+---
+
+## 📌 Endpoints disponibles
+
+### 🔐 Authentification
+
+| Méthode | Route                | Description                      |
+|---------|----------------------|----------------------------------|
+| POST    | `/api/auth/register` | Inscription utilisateur          |
+| POST    | `/api/auth/login`    | Connexion et récupération du JWT |
+
+### 🐱 Pokémon
+
+| Méthode | Route                      | Description                               |
+|---------|----------------------------|-------------------------------------------|
+| GET     | `/api/pokemons`            | Liste complète des pokémons               |
+| GET     | `/api/pokemons/page/:n`    | Pokémons paginés par 10                   |
+| GET     | `/api/pokemons/id/:id`     | Détails d’un pokémon par ID               |
+| GET     | `/api/pokemons/name/:name` | Rechercher un pokémon par nom             |
+| GET     | `/api/pokemons/type/:type` | Rechercher par type                       |
+| GET     | `/api/pokemons/search`     | Rechercher par nom + types (query params) |
+| POST    | `/api/pokemons`            | Ajouter un pokémon (auth requis)          |
+| PUT     | `/api/pokemons/:id`        | Modifier un pokémon (auth requis)         |
+| DELETE  | `/api/pokemons/:id`        | Supprimer un pokémon (admin uniquement)   |
+
+---
+
+## ✅ Fonctionnalités techniques couvertes
+
+- Node.js avec Express.js
+- MongoDB avec Mongoose
+- Hachage des mots de passe avec bcryptjs
+- Authentification JWT avec jsonwebtoken
+- Middleware de vérification et contrôle des rôles
+- Validation de schéma dans Mongoose
+- Endpoints RESTful compatibles avec les clients existants
+
+---
+
+## 📊 Améliorations futures possibles
+
+- [ ] Ajout de tests unitaires
+- [ ] Documentation Swagger
+- [ ] Téléversement d’images
+- [ ] Pagination améliorée
+
+---
+
+## 📄 Licence
+
+Projet réalisé à but pédagogique.  
+Feel free to fork & improve 👨‍💻
