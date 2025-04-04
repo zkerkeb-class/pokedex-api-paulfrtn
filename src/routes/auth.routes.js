@@ -17,7 +17,8 @@ const JWT_SECRET = process.env.JWT_SECRET;
  * @return 201 Created ou 400/500 en erreur
  * */
 router.post("/register", async (req, res) => {
-  const { firstname, lastname, mail, password, role } = req.body;
+  const { firstname, lastname, mail, password } = req.body;
+  const role = "user";
 
   try {
     const existingUser = await User.findOne({ mail });

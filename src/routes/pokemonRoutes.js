@@ -26,12 +26,11 @@ router.get("/page/:page", async (req, res) => {
 });
 
 router.get("/id/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
   try {
-    const pokemons = await Pokemon.findOne({ id });
-    if (!pokemons)
+    const pokemon = await Pokemon.findById(req.params.id);
+    if (!pokemon)
       return res.status(404).json({ message: "Pokemon non trouvé" });
-    res.json(pokemons);
+    res.json(pokemon);
   } catch (e) {
     res.status(500).json({ message: "Erreur serveur", error: e.message });
   }
@@ -122,18 +121,17 @@ router.post("/", verifyToken, async (req, res) => {
 
 
 /**
- * @route   PUT /api/pokemons/:id
- * @desc    Modifier un Pokémon existant par son ID
+ * @route   PUT /api/pokemons/id/:id
+ * @desc    Modifier un Pokémon existant par son ID MongoDB
  * @access  Privé (JWT requis)
  * @headers Authorization: Bearer <token>
- * @params  :id (Number) → ID du Pokémon à modifier
+ * @params  :id (String) → ID MongoDB du Pokémon à modifier
  * @body    Toutes les propriétés modifiables du Pokémon
  * @return  200 OK avec le Pokémon mis à jour, 404 si non trouvé, ou 500 en erreur serveur
  */
-router.put("/:id", verifyToken, async (req, res) => {
+router.put("/id/:id", verifyToken, async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
-    const updated = await Pokemon.findOneAndUpdate({ id }, req.body, {
+    const updated = await Pokemon.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
@@ -147,14 +145,14 @@ router.put("/:id", verifyToken, async (req, res) => {
 
 
 /**
- * @route   DELETE /api/pokemons/:id
+ * @route   DELETE /api/pokemons/id/:id
  * @desc    Supprimer un Pokémon (admin uniquement)
  * @access  Privé (JWT + admin)
  * @headers Authorization: Bearer <token>
- * @params  :id (int)
+ * @params  :id (String) → ID MongoDB du Pokémon
  * @return  200 OK ou 403/401/404
  */
-router.delete("/:id", verifyToken, async (req, res) => {
+router.delete("/id/:id", verifyToken, async (req, res) => {
   if (req.user.role !== "admin") {
     return res
       .status(403)
@@ -162,8 +160,7 @@ router.delete("/:id", verifyToken, async (req, res) => {
   }
 
   try {
-    const id = parseInt(req.params.id);
-    const deleted = await Pokemon.findOneAndDelete({ id });
+    const deleted = await Pokemon.findByIdAndDelete(req.params.id);
     if (!deleted)
       return res.status(404).json({ message: "Pokémon introuvable" });
     res.json({ message: "Supprimé avec succès", pokemon: deleted });
