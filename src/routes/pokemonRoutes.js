@@ -18,8 +18,15 @@ router.get("/page/:page", async (req, res) => {
   const limit = 10;
   const skip = (page - 1) * limit;
   try {
+    const totalCount = await Pokemon.countDocuments();
     const pokemons = await Pokemon.find({}).skip(skip).limit(limit);
-    res.json(pokemons);
+
+    const totalPages = Math.ceil(totalCount / limit);
+
+    res.json({
+      pokemons,
+      totalPages,
+    });
   } catch (e) {
     res.status(500).json({ message: "Erreur serveur", error: e.message });
   }
@@ -65,21 +72,32 @@ router.get("/type/:type", async (req, res) => {
 });
 
 router.get("/search", async (req, res) => {
-  const { searchTerm, types } = req.query;
+  const { searchTerm, types, page = 1 } = req.query;
+  const limit = 10;
+  const skip = (parseInt(page) - 1) * limit;
   const query = {};
 
   if (searchTerm) {
-    query.name = { $regex: searchTerm, $options: "i" };
+    query.$or = [
+      { "name.french": { $regex: searchTerm, $options: "i" } },
+      { "name.english": { $regex: searchTerm, $options: "i" } }
+    ];
   }
 
   if (types) {
     const typeArray = types.split(",");
-    query.type = { $all: typeArray.map((t) => t.toLowerCase()) };
+    query.type = { $all: typeArray.map((t) => t.trim()) };
   }
 
   try {
-    const pokemons = await Pokemon.find(query);
-    res.json(pokemons);
+    const totalCount = await Pokemon.countDocuments(query);
+    const pokemons = await Pokemon.find(query).skip(skip).limit(limit);
+    const totalPages = Math.ceil(totalCount / limit);
+    
+    res.json({
+      pokemons,
+      totalPages
+    });
   } catch (e) {
     res.status(500).json({ message: "Erreur serveur", error: e.message });
   }
