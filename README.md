@@ -1,7 +1,7 @@
 # 📦 Pokedex API – Projet Node.js + MongoDB
 
-Une API RESTful pour manipuler des données Pokémon avec gestion des utilisateurs, authentification JWT, et rôles (
-`admin` / `user`).
+Une API RESTful pour manipuler des données Pokémon avec gestion des utilisateurs, authentification JWT, rôles (`admin` /
+`user`), **ouverture de boosters**, et **gestion des cartes débloquées**.
 
 ---
 
@@ -41,6 +41,7 @@ Ce script :
 
 - Supprime les anciens pokémons et utilisateurs
 - Réimporte tous les pokémons depuis `pokemons.json`
+- Calcule la rareté de chaque Pokémon automatiquement (voir plus bas 👇)
 - Crée deux utilisateurs : un admin et un user
 
 ```bash
@@ -56,14 +57,34 @@ npm run import-data
 
 ---
 
-## 🧪 Lancer le serveur en mode développement
+## 🌟 Gestion de la rareté
 
-```bash
-npm run dev
-```
+La rareté d’un Pokémon est calculée **à l’import** en fonction de la **somme de ses statistiques de base** :
 
-Le serveur démarre par défaut sur :  
-[http://localhost:3000](http://localhost:3000)
+| Rareté     | Total stats |
+|------------|-------------|
+| Common     | < 400       |
+| Rare       | 400–474     |
+| Ultra Rare | 475–524     |
+| Legendary  | 525–599     |
+| Mythic     | ≥ 600       |
+
+> Cette rareté est **stockée directement dans MongoDB**, et utilisée dans les boosters 🎴
+
+---
+
+## 🎁 Boosters aléatoires
+
+L'utilisateur peut tirer un **booster de 5 Pokémon**. Chaque carte est tirée avec une **probabilité basée sur la rareté
+** :
+
+| Position | Rareté possible           | Probabilités                                                                 |
+|----------|---------------------------|------------------------------------------------------------------------------|
+| 1 à 5    | Mixées avec poids suivant | `Common`: 60%, `Rare`: 25%, `Ultra Rare`: 10%, `Legendary`: 4%, `Mythic`: 1% |
+
+- Le tirage utilise une logique pondérée
+- Les cartes sont **directement enregistrées** dans le champ `unlockedPokemons` de l'utilisateur
+- Pas besoin d’attendre l’ouverture dans le front 👌
 
 ---
 
@@ -76,19 +97,30 @@ Le serveur démarre par défaut sur :
 | POST    | `/api/auth/register` | Inscription utilisateur          |
 | POST    | `/api/auth/login`    | Connexion et récupération du JWT |
 
+---
+
 ### 🐱 Pokémon
 
-| Méthode | Route                      | Description                               |
-|---------|----------------------------|-------------------------------------------|
-| GET     | `/api/pokemons`            | Liste complète des pokémons               |
-| GET     | `/api/pokemons/page/:n`    | Pokémons paginés par 10                   |
-| GET     | `/api/pokemons/id/:id`     | Détails d’un pokémon par ID               |
-| GET     | `/api/pokemons/name/:name` | Rechercher un pokémon par nom             |
-| GET     | `/api/pokemons/type/:type` | Rechercher par type                       |
-| GET     | `/api/pokemons/search`     | Rechercher par nom + types (query params) |
-| POST    | `/api/pokemons`            | Ajouter un pokémon (auth requis)          |
-| PUT     | `/api/pokemons/:id`        | Modifier un pokémon (auth requis)         |
-| DELETE  | `/api/pokemons/:id`        | Supprimer un pokémon (admin uniquement)   |
+| Méthode | Route                      | Description                                        |
+|---------|----------------------------|----------------------------------------------------|
+| GET     | `/api/pokemons`            | Liste complète des pokémons                        |
+| GET     | `/api/pokemons/page/:n`    | Pokémons paginés par 10                            |
+| GET     | `/api/pokemons/id/:id`     | Détails d’un pokémon par ID                        |
+| GET     | `/api/pokemons/name/:name` | Rechercher un pokémon par nom                      |
+| GET     | `/api/pokemons/type/:type` | Rechercher par type                                |
+| GET     | `/api/pokemons/search`     | Rechercher par nom + types (`searchTerm`, `types`) |
+| POST    | `/api/pokemons`            | Ajouter un pokémon (auth requis)                   |
+| PUT     | `/api/pokemons/id/:id`     | Modifier un pokémon (auth requis)                  |
+| DELETE  | `/api/pokemons/id/:id`     | Supprimer un pokémon (admin uniquement)            |
+
+---
+
+### 🃏 Boosters & cartes débloquées
+
+| Méthode | Route                    | Description                                                                             |
+|---------|--------------------------|-----------------------------------------------------------------------------------------|
+| GET     | `/api/pokemons/booster`  | Tire un booster de 5 cartes aléatoires (auth requis). Mise à jour de `unlockedPokemons` |
+| GET     | `/api/pokemons/unlocked` | Retourne tous les Pokémon que l’utilisateur a déjà débloqué (auth requis)               |
 
 ---
 
@@ -99,8 +131,10 @@ Le serveur démarre par défaut sur :
 - Hachage des mots de passe avec bcryptjs
 - Authentification JWT avec jsonwebtoken
 - Middleware de vérification et contrôle des rôles
-- Validation de schéma dans Mongoose
-- Endpoints RESTful compatibles avec les clients existants
+- Système de rareté automatique des Pokémon
+- Tirage pondéré pour boosters
+- Système de cartes débloquées utilisateur
+- Endpoints RESTful compatibles avec le front
 
 ---
 
@@ -109,7 +143,8 @@ Le serveur démarre par défaut sur :
 - [ ] Ajout de tests unitaires
 - [ ] Documentation Swagger
 - [ ] Téléversement d’images
-- [ ] Pagination améliorée
+- [ ] Réinitialisation du pokedex utilisateur
+- [ ] Booster à thème (type ou génération)
 
 ---
 

@@ -49,6 +49,11 @@ const pokemonSchema = new mongoose.Schema(
       specialDefense: Number,
       speed: Number,
     },
+    rarity: {
+      type: String,
+      enum: ["Common", "Rare", "Ultra Rare", "Legendary", "Mythic"],
+      required: true,
+    },
     evolutions: [
       {
         type: Number,

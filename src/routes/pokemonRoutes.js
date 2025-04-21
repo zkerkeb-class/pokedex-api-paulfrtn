@@ -1,5 +1,6 @@
 import express from "express";
 import Pokemon from "../models/Pokemon.js";
+import User from "../models/User.js";
 import verifyToken from "../middleware/auth.middleware.js";
 
 const router = express.Router();
@@ -80,7 +81,7 @@ router.get("/search", async (req, res) => {
   if (searchTerm) {
     query.$or = [
       { "name.french": { $regex: searchTerm, $options: "i" } },
-      { "name.english": { $regex: searchTerm, $options: "i" } }
+      { "name.english": { $regex: searchTerm, $options: "i" } },
     ];
   }
 
@@ -93,10 +94,10 @@ router.get("/search", async (req, res) => {
     const totalCount = await Pokemon.countDocuments(query);
     const pokemons = await Pokemon.find(query).skip(skip).limit(limit);
     const totalPages = Math.ceil(totalCount / limit);
-    
+
     res.json({
       pokemons,
-      totalPages
+      totalPages,
     });
   } catch (e) {
     res.status(500).json({ message: "Erreur serveur", error: e.message });
@@ -137,7 +138,6 @@ router.post("/", verifyToken, async (req, res) => {
   }
 });
 
-
 /**
  * @route   PUT /api/pokemons/id/:id
  * @desc    Modifier un Pokémon existant par son ID MongoDB
@@ -161,7 +161,6 @@ router.put("/id/:id", verifyToken, async (req, res) => {
   }
 });
 
-
 /**
  * @route   DELETE /api/pokemons/id/:id
  * @desc    Supprimer un Pokémon (admin uniquement)
@@ -184,6 +183,92 @@ router.delete("/id/:id", verifyToken, async (req, res) => {
     res.json({ message: "Supprimé avec succès", pokemon: deleted });
   } catch (e) {
     res.status(500).json({ message: "Erreur suppression", error: e.message });
+  }
+});
+
+
+/**
+ * @route   GET /api/pokemons/booster
+ * @desc    Tirer un booster de 5 Pokémon aléatoires selon la rareté
+ * @access  Privé (JWT requis)
+ * @headers Authorization: Bearer <token>
+ * @return  200 OK avec un tableau de 5 Pokémon tirés
+ *          Ces Pokémon sont automatiquement ajoutés au champ `unlockedPokemons` du user
+ *          500 en cas d'erreur serveur
+ */
+router.get("/booster", verifyToken, async (req, res) => {
+  const rarityChances = [
+    { rarity: "Common", weight: 60 },
+    { rarity: "Rare", weight: 25 },
+    { rarity: "Ultra Rare", weight: 10 },
+    { rarity: "Legendary", weight: 4 },
+    { rarity: "Mythic", weight: 1 },
+  ];
+
+  function drawRarity() {
+    const total = rarityChances.reduce((sum, r) => sum + r.weight, 0);
+    const rand = Math.random() * total;
+    let cumulative = 0;
+    for (const rarity of rarityChances) {
+      cumulative += rarity.weight;
+      if (rand < cumulative) {
+        return rarity.rarity;
+      }
+    }
+  }
+
+  function getRandomElement(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  }
+
+  try {
+    const booster = [];
+
+    for (let i = 0; i < 5; i++) {
+      const rarity = drawRarity();
+      const pokemons = await Pokemon.find({ rarity });
+      if (pokemons.length === 0) continue;
+      booster.push(getRandomElement(pokemons));
+    }
+
+    const userId = req.user.id;
+    const boosterIds = booster.map((p) => p._id);
+
+    await User.findByIdAndUpdate(
+        userId,
+        { $addToSet: { unlockedPokemons: { $each: boosterIds } } },
+        { new: true }
+    );
+
+
+    res.json({ booster });
+  } catch (e) {
+    res
+      .status(500)
+      .json({ message: "Erreur lors du tirage", error: e.message });
+  }
+});
+
+
+/**
+ * @route   GET /api/pokemons/unlocked
+ * @desc    Obtenir tous les Pokémon débloqués par l'utilisateur connecté
+ * @access  Privé (JWT requis)
+ * @headers Authorization: Bearer <token>
+ * @return  200 OK avec la liste des Pokémon débloqués
+ *          404 si l'utilisateur n'existe pas
+ *          500 en cas d'erreur serveur
+ */
+router.get("/unlocked", verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate("unlockedPokemons");
+    if(!user){
+      return res.status(404).json({ message: "Utilisateur introuvable" });
+    }
+
+    res.json({ pokemons : user.unlockedPokemons });
+  } catch (e) {
+    res.status(500).json({ message: "Erreur serveur", error: e.message });
   }
 });
 
