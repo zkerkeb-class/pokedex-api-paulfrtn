@@ -2,6 +2,7 @@ import express from "express";
 import Pokemon from "../models/Pokemon.js";
 import User from "../models/User.js";
 import verifyToken from "../middleware/auth.middleware.js";
+import isAdmin from "../middleware/admin.middleware.js";
 
 const router = express.Router();
 
@@ -61,8 +62,8 @@ router.get("/name/:name", async (req, res) => {
 router.get("/type/:type", async (req, res) => {
   const type = req.params.type.toLowerCase();
   try {
-    const pokemons = await Pokemon.findOne({
-      name: new RegExp(`^${name}$`, "i"),
+    const pokemons = await Pokemon.find({
+      type: type,
     });
     if (!pokemons)
       return res.status(404).json({ message: "Pokemon non trouvé" });
@@ -107,7 +108,7 @@ router.get("/search", async (req, res) => {
 /**
  * @route   POST /api/pokemons
  * @desc    Ajouter un nouveau Pokémon
- * @access  Privé (JWT requis)
+ * @access  Privé (JWT et role admin requis)
  * @headers Authorization: Bearer <token>
  * @body    {
  *            id: Number,
@@ -118,7 +119,7 @@ router.get("/search", async (req, res) => {
  *          }
  * @return  201 Created avec le Pokémon créé, ou 400 si déjà existant, ou 500 en erreur serveur
  */
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", verifyToken, isAdmin, async (req, res) => {
   try {
     const pokemonData = req.body;
 
@@ -141,13 +142,13 @@ router.post("/", verifyToken, async (req, res) => {
 /**
  * @route   PUT /api/pokemons/id/:id
  * @desc    Modifier un Pokémon existant par son ID MongoDB
- * @access  Privé (JWT requis)
+ * @access  Privé (JWT et role admin requis)
  * @headers Authorization: Bearer <token>
  * @params  :id (String) → ID MongoDB du Pokémon à modifier
  * @body    Toutes les propriétés modifiables du Pokémon
  * @return  200 OK avec le Pokémon mis à jour, 404 si non trouvé, ou 500 en erreur serveur
  */
-router.put("/id/:id", verifyToken, async (req, res) => {
+router.put("/id/:id", verifyToken, isAdmin, async (req, res) => {
   try {
     const updated = await Pokemon.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -169,13 +170,7 @@ router.put("/id/:id", verifyToken, async (req, res) => {
  * @params  :id (String) → ID MongoDB du Pokémon
  * @return  200 OK ou 403/401/404
  */
-router.delete("/id/:id", verifyToken, async (req, res) => {
-  if (req.user.role !== "admin") {
-    return res
-      .status(403)
-      .json({ message: "Accès interdit: admin uniquement." });
-  }
-
+router.delete("/id/:id", verifyToken, isAdmin, async (req, res) => {
   try {
     const deleted = await Pokemon.findByIdAndDelete(req.params.id);
     if (!deleted)
