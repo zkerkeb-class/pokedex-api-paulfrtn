@@ -151,4 +151,4 @@ L'utilisateur peut tirer un **booster de 5 Pokémon**. Chaque carte est tirée a
 ## 📄 Licence
 
 Projet réalisé à but pédagogique.  
-Feel free to fork & improve 👨‍💻
+Feel free to fork & improve 👨‍💻:)
