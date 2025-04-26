@@ -217,32 +217,45 @@ router.get("/booster", verifyToken, async (req, res) => {
   }
 
   try {
+    const userId = req.user.id;
+    const user = await User.findById(userId).select("unlockedPokemons");
+
     const booster = [];
 
     for (let i = 0; i < 5; i++) {
       const rarity = drawRarity();
       const pokemons = await Pokemon.find({ rarity });
       if (pokemons.length === 0) continue;
-      booster.push(getRandomElement(pokemons));
+
+      const randomPokemon = getRandomElement(pokemons);
+      const isAlreadyUnlocked = user.unlockedPokemons.some((id) =>
+        id.equals(randomPokemon._id)
+      );
+
+      booster.push({
+        ...randomPokemon.toObject(),
+        new: !isAlreadyUnlocked,
+      });
     }
 
-    const userId = req.user.id;
-    const boosterIds = booster.map((p) => p._id);
+    const newPokemonIds = booster
+      .filter((p) => p.new)
+      .map((p) => p._id);
 
-    await User.findByIdAndUpdate(
+    if (newPokemonIds.length > 0) {
+      await User.findByIdAndUpdate(
         userId,
-        { $addToSet: { unlockedPokemons: { $each: boosterIds } } },
+        { $addToSet: { unlockedPokemons: { $each: newPokemonIds } } },
         { new: true }
-    );
-
+      );
+    }
 
     res.json({ booster });
   } catch (e) {
-    res
-      .status(500)
-      .json({ message: "Erreur lors du tirage", error: e.message });
+    res.status(500).json({ message: "Erreur lors du tirage", error: e.message });
   }
 });
+
 
 
 /**
