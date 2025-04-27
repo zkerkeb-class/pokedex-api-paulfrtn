@@ -59,7 +59,7 @@ npm run import-data
 
 ## 🌟 Gestion de la rareté
 
-La rareté d’un Pokémon est calculée **à l’import** en fonction de la **somme de ses statistiques de base** :
+La rareté d'un Pokémon est calculée **à l'import** en fonction de la **somme de ses statistiques de base** :
 
 | Rareté     | Total stats |
 |------------|-------------|
@@ -84,7 +84,7 @@ L'utilisateur peut tirer un **booster de 5 Pokémon**. Chaque carte est tirée a
 
 - Le tirage utilise une logique pondérée
 - Les cartes sont **directement enregistrées** dans le champ `unlockedPokemons` de l'utilisateur
-- Pas besoin d’attendre l’ouverture dans le front 👌
+- Pas besoin d'attendre l'ouverture dans le front 👌
 
 ---
 
@@ -96,6 +96,7 @@ L'utilisateur peut tirer un **booster de 5 Pokémon**. Chaque carte est tirée a
 |---------|----------------------|----------------------------------|
 | POST    | `/api/auth/register` | Inscription utilisateur          |
 | POST    | `/api/auth/login`    | Connexion et récupération du JWT |
+| POST    | `/api/auth/refresh`  | Rafraîchissement du token JWT    |
 
 ---
 
@@ -105,7 +106,7 @@ L'utilisateur peut tirer un **booster de 5 Pokémon**. Chaque carte est tirée a
 |---------|----------------------------|----------------------------------------------------|
 | GET     | `/api/pokemons`            | Liste complète des pokémons                        |
 | GET     | `/api/pokemons/page/:n`    | Pokémons paginés par 10                            |
-| GET     | `/api/pokemons/id/:id`     | Détails d’un pokémon par ID                        |
+| GET     | `/api/pokemons/id/:id`     | Détails d'un pokémon par ID                        |
 | GET     | `/api/pokemons/name/:name` | Rechercher un pokémon par nom                      |
 | GET     | `/api/pokemons/type/:type` | Rechercher par type                                |
 | GET     | `/api/pokemons/search`     | Rechercher par nom + types (`searchTerm`, `types`) |
@@ -120,7 +121,7 @@ L'utilisateur peut tirer un **booster de 5 Pokémon**. Chaque carte est tirée a
 | Méthode | Route                    | Description                                                                             |
 |---------|--------------------------|-----------------------------------------------------------------------------------------|
 | GET     | `/api/pokemons/booster`  | Tire un booster de 5 cartes aléatoires (auth requis). Mise à jour de `unlockedPokemons` |
-| GET     | `/api/pokemons/unlocked` | Retourne tous les Pokémon que l’utilisateur a déjà débloqué (auth requis)               |
+| GET     | `/api/pokemons/unlocked` | Retourne tous les Pokémon que l'utilisateur a déjà débloqué (auth requis)               |
 
 ---
 
@@ -142,7 +143,7 @@ L'utilisateur peut tirer un **booster de 5 Pokémon**. Chaque carte est tirée a
 
 - [ ] Ajout de tests unitaires
 - [ ] Documentation Swagger
-- [ ] Téléversement d’images
+- [ ] Téléversement d'images
 - [ ] Réinitialisation du pokedex utilisateur
 - [ ] Booster à thème (type ou génération)
 

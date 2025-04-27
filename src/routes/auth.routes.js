@@ -2,6 +2,7 @@ import express from "express";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import verifyToken from "../middleware/auth.middleware.js";
 
 dotenv.config();
 
@@ -68,6 +69,35 @@ router.post("/login", async (req, res) => {
       .json({ token, user: { firstname: user.firstname, role: user.role } });
   } catch (e) {
     console.error("Erreur de connexion : ", e);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+/**
+ * @route   POST /api/auth/refresh
+ * @desc    Rafraîchir le token JWT
+ * @access  Privé (nécessite un token valide)
+ * @return  200 OK avec le nouveau token ou 401
+ */
+router.post("/refresh", verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(401).json({ message: "Utilisateur introuvable" });
+    }
+    
+    const newToken = jwt.sign(
+      { id: user._id, mail: user.mail, role: user.role },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    
+    res.status(200).json({ 
+      token: newToken, 
+      user: { firstname: user.firstname, role: user.role } 
+    });
+  } catch (e) {
+    console.error("Erreur lors du rafraîchissement du token :", e);
     res.status(500).json({ message: "Erreur serveur" });
   }
 });

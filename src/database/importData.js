@@ -62,7 +62,7 @@ const importData = async () => {
     const admin = new User({
       firstname: "Admin",
       lastname: "Test",
-      mail: "adminTTS@poke.com",
+      mail: "admin@poke.com",
       password: "admin123",
       role: "admin",
     });
