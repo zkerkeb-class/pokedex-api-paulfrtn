@@ -6,7 +6,7 @@ import isAdmin from "../middleware/admin.middleware.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   try {
     const pokemons = await Pokemon.find({});
     res.json(pokemons);
@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/page/:page", async (req, res) => {
+router.get("/page/:page", verifyToken, async (req, res) => {
   const page = parseInt(req.params.page);
   const limit = 10;
   const skip = (page - 1) * limit;
@@ -34,7 +34,7 @@ router.get("/page/:page", async (req, res) => {
   }
 });
 
-router.get("/id/:id", async (req, res) => {
+router.get("/id/:id", verifyToken, async (req, res) => {
   try {
     const pokemon = await Pokemon.findById(req.params.id);
     if (!pokemon)
@@ -45,7 +45,7 @@ router.get("/id/:id", async (req, res) => {
   }
 });
 
-router.get("/name/:name", async (req, res) => {
+router.get("/name/:name", verifyToken, async (req, res) => {
   const name = req.params.name.toLowerCase();
   try {
     const pokemons = await Pokemon.findOne({
@@ -59,7 +59,7 @@ router.get("/name/:name", async (req, res) => {
   }
 });
 
-router.get("/type/:type", async (req, res) => {
+router.get("/type/:type", verifyToken, async (req, res) => {
   const type = req.params.type.toLowerCase();
   try {
     const pokemons = await Pokemon.find({
@@ -73,7 +73,7 @@ router.get("/type/:type", async (req, res) => {
   }
 });
 
-router.get("/search", async (req, res) => {
+router.get("/search", verifyToken, async (req, res) => {
   const { searchTerm, types, page = 1 } = req.query;
   const limit = 10;
   const skip = (parseInt(page) - 1) * limit;
@@ -181,7 +181,6 @@ router.delete("/id/:id", verifyToken, isAdmin, async (req, res) => {
   }
 });
 
-
 /**
  * @route   GET /api/pokemons/booster
  * @desc    Tirer un booster de 5 Pokémon aléatoires selon la rareté
@@ -229,7 +228,7 @@ router.get("/booster", verifyToken, async (req, res) => {
 
       const randomPokemon = getRandomElement(pokemons);
       const isAlreadyUnlocked = user.unlockedPokemons.some((id) =>
-        id.equals(randomPokemon._id)
+        id.equals(randomPokemon._id),
       );
 
       booster.push({
@@ -238,25 +237,23 @@ router.get("/booster", verifyToken, async (req, res) => {
       });
     }
 
-    const newPokemonIds = booster
-      .filter((p) => p.new)
-      .map((p) => p._id);
+    const newPokemonIds = booster.filter((p) => p.new).map((p) => p._id);
 
     if (newPokemonIds.length > 0) {
       await User.findByIdAndUpdate(
         userId,
         { $addToSet: { unlockedPokemons: { $each: newPokemonIds } } },
-        { new: true }
+        { new: true },
       );
     }
 
     res.json({ booster });
   } catch (e) {
-    res.status(500).json({ message: "Erreur lors du tirage", error: e.message });
+    res
+      .status(500)
+      .json({ message: "Erreur lors du tirage", error: e.message });
   }
 });
-
-
 
 /**
  * @route   GET /api/pokemons/unlocked
@@ -270,11 +267,11 @@ router.get("/booster", verifyToken, async (req, res) => {
 router.get("/unlocked", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).populate("unlockedPokemons");
-    if(!user){
+    if (!user) {
       return res.status(404).json({ message: "Utilisateur introuvable" });
     }
 
-    res.json({ pokemons : user.unlockedPokemons });
+    res.json({ pokemons: user.unlockedPokemons });
   } catch (e) {
     res.status(500).json({ message: "Erreur serveur", error: e.message });
   }

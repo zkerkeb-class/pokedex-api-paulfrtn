@@ -1,11 +1,8 @@
 import express from "express";
 import cors from "cors";
-import pokemonsList from "./data/pokemons.json" assert { type: "json" };
 import dotenv from "dotenv";
 import path from "path";
-import fs from "fs";
 import { fileURLToPath } from "url";
-import countData from "./data/count.json" assert { type: "json" };
 import connectDB from "./config/db.js";
 import pokemonRoutes from "./routes/pokemonRoutes.js";
 import authRoutes from "./routes/auth.routes.js";
