@@ -123,13 +123,23 @@ router.post("/", verifyToken, isAdmin, async (req, res) => {
   try {
     const pokemonData = req.body;
 
-    // Vérifier si un Pokémon avec cet ID existe déjà
     const exists = await Pokemon.findOne({ id: pokemonData.id });
     if (exists) {
       return res.status(400).json({ message: "Ce pokemon existe déjà" });
     }
 
-    // Créer le nouveau Pokémon
+    const base = pokemonData.base;
+    const totalStats = Object.values(base).reduce((sum, val) => sum + val, 0);
+    
+    let rarity;
+    if (totalStats >= 600) rarity = "Mythic";
+    else if (totalStats >= 525) rarity = "Legendary";
+    else if (totalStats >= 475) rarity = "Ultra Rare";
+    else if (totalStats >= 400) rarity = "Rare";
+    else rarity = "Common";
+    
+    pokemonData.rarity = rarity;
+
     const newPokemon = new Pokemon(pokemonData);
     const savedPokemon = await newPokemon.save();
 
